@@ -9,8 +9,4 @@ function Home() {
   );
 }
 
-function test() {
-  console.log("teste");
-}
-
 export default Home;
