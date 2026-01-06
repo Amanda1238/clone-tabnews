@@ -7,6 +7,7 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
+    ssl: process.env.NODE_ENV === "development" ? false : true,
   });
 
   console.log("Credencias do postgres: ", {
@@ -16,13 +17,13 @@ async function query(queryObject) {
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
   });
-
   try {
     await client.connect();
     const result = await client.query(queryObject);
     return result;
   } catch (error) {
     console.error("Database connection error:", error);
+    throw error;
   } finally {
     await client.end();
   }
